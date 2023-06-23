@@ -27,11 +27,10 @@ passport.use(
     }), async (email, senha, done) => {
         try {
             const usuario = await Usuario.buscaPorEmail(email);
-            verificaUsuario(usuario);    
+            verificaUsuario(usuario);
+            await verificaSenha(senha, usuario.senhaHash);
+            done(null, usuario);    
         } catch (error) {
             done(erro);
         }
-
-        
     })
-)
